@@ -40,10 +40,10 @@ export const USE_CASES: UseCase[] = [
   },
   {
     id: "use-case-4",
-    title: "Retrieve approved guidance on using AI to extract figures from vendor invoices",
+    title: "Retrieve approved guidance on using AI to summarize vendor services agreements",
     submittedBy: "Renata Osei, Knowledge Management Associate (synthetic)",
     businessContext:
-      "Before using an AI tool to pull financial figures from a new batch of vendor invoices, an associate wanted to check whether the firm's internal knowledge base already had approved guidance on doing so, instead of starting a fresh evaluation each time the same question comes up.",
+      "Before requesting a first-pass AI summary of a new vendor services agreement, an associate wanted to check whether the firm's internal knowledge base already had approved guidance on doing so, instead of starting a fresh evaluation each time the same question comes up.",
     targetTool: "Enterprise AI Retrieval (simulated)",
     dateSubmitted: "2026-02-02",
   },

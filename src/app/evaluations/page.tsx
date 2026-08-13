@@ -3,6 +3,7 @@ import Link from "next/link";
 import { EVALUATIONS } from "@/data/evaluations";
 import { getUseCaseById } from "@/data/use-cases";
 import { getHumanReviewByEvaluationId } from "@/data/human-reviews";
+import { getKnowledgeEntryBySourceEvaluationId } from "@/data/knowledge-entries";
 import { StatusBadge } from "@/components/status-badge";
 import { DecisionBadge } from "@/components/decision-badge";
 
@@ -59,12 +60,18 @@ export default function EvaluationsPage() {
                 <th scope="col" className="px-4 py-3">
                   Human Review Decision
                 </th>
+                <th scope="col" className="px-4 py-3">
+                  Knowledge Entry
+                </th>
               </tr>
             </thead>
             <tbody>
               {EVALUATIONS.map((evaluation) => {
                 const useCase = getUseCaseById(evaluation.useCaseId);
                 const review = getHumanReviewByEvaluationId(evaluation.id);
+                const knowledgeEntry = getKnowledgeEntryBySourceEvaluationId(
+                  evaluation.id,
+                );
                 return (
                   <tr
                     key={evaluation.id}
@@ -106,6 +113,20 @@ export default function EvaluationsPage() {
                         </span>
                       )}
                     </td>
+                    <td className="px-4 py-4 align-top">
+                      {knowledgeEntry ? (
+                        <Link
+                          href={`/knowledge/${knowledgeEntry.id}`}
+                          className="text-foreground/80 underline-offset-2 hover:underline"
+                        >
+                          {knowledgeEntry.version}
+                        </Link>
+                      ) : (
+                        <span className="text-xs text-muted">
+                          Not published
+                        </span>
+                      )}
+                    </td>
                   </tr>
                 );
               })}
@@ -113,9 +134,16 @@ export default function EvaluationsPage() {
           </table>
         </div>
 
-        <p className="mt-10 text-sm text-foreground/60">
-          Resulting Knowledge Entries (Phase 5) are not yet attached to
-          these cases.
+        <p className="mt-10 max-w-3xl text-sm text-foreground/60">
+          Only evaluations with an Approved or Approved with Controls Human
+          Review decision produce a Knowledge Entry in this prototype — see{" "}
+          <Link
+            href="/knowledge"
+            className="font-medium text-foreground/80 underline-offset-2 hover:underline"
+          >
+            Knowledge
+          </Link>{" "}
+          for how the other reviewed cases are represented as non-published.
         </p>
       </section>
     </main>

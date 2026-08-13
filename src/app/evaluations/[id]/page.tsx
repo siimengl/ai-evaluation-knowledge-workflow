@@ -4,22 +4,22 @@ import { notFound } from "next/navigation";
 import { EVALUATIONS, getEvaluationById } from "@/data/evaluations";
 import { getUseCaseById } from "@/data/use-cases";
 import { getHumanReviewByEvaluationId } from "@/data/human-reviews";
+import {
+  getKnowledgeEntryById,
+  getKnowledgeEntryBySourceEvaluationId,
+} from "@/data/knowledge-entries";
 import { StatusBadge } from "@/components/status-badge";
 import { ActorTag } from "@/components/actor-tag";
 import { DimensionScoreCard } from "@/components/dimension-score";
 import { DecisionBadge } from "@/components/decision-badge";
+import { KnowledgeStatusBadge } from "@/components/knowledge-status-badge";
 import { EVALUATION_DIMENSIONS } from "@/lib/evaluation-dimensions";
 
 /**
  * Phase 3 — Evaluation Workspace (IMPLEMENTATION_PLAN.md Phase 3), with the
- * Human Review section now populated (Phase 4).
- *
- * Renders one case in full: use-case intake, a source-to-output comparison
- * panel, structured scoring, failure mode, review boundary, and the
- * recorded Human Review. The Human Review panel is deliberately styled to
- * read as a distinct, human-attributed record — not more AI output, and not
- * an interleaved continuation of the structured scoring above it. Links to
- * /knowledge/[id] and /evidence/[id] remain omitted; neither exists yet.
+ * Human Review section populated in Phase 4 and the forward link to the
+ * resulting Knowledge Entry (Phase 5) added here. `/evidence/[id]` remains
+ * omitted; it does not exist yet.
  */
 
 export function generateStaticParams() {
@@ -55,6 +55,10 @@ export default async function EvaluationDetailPage({
   }
 
   const review = getHumanReviewByEvaluationId(evaluation.id);
+  const knowledgeEntry = getKnowledgeEntryBySourceEvaluationId(evaluation.id);
+  const retrievedEntry = evaluation.retrievesKnowledgeEntryId
+    ? getKnowledgeEntryById(evaluation.retrievesKnowledgeEntryId)
+    : undefined;
 
   return (
     <main className="flex-1">
@@ -160,6 +164,19 @@ export default async function EvaluationDetailPage({
                 reviewed or approved result. See Structured Evaluation and
                 Human Review below for what a reviewer made of it.
               </p>
+              {retrievedEntry && (
+                <p className="mt-3 rounded-lg border border-border-subtle bg-surface px-4 py-3 text-xs leading-5 text-foreground/70">
+                  This retrieval result names a real Knowledge Entry in this
+                  app —{" "}
+                  <Link
+                    href={`/knowledge/${retrievedEntry.id}`}
+                    className="font-medium text-foreground underline-offset-2 hover:underline"
+                  >
+                    {retrievedEntry.title}
+                  </Link>{" "}
+                  — rather than an invented or unlinked reference.
+                </p>
+              )}
             </section>
 
             {/* Structured Evaluation */}
@@ -259,6 +276,54 @@ export default async function EvaluationDetailPage({
                 </div>
               )}
             </section>
+
+            {/* Resulting Knowledge Entry — Phase 5 forward link. Only
+                rendered as a real link when a KnowledgeEntry actually
+                exists; otherwise this states plainly why one doesn't,
+                rather than a dead or fabricated link. */}
+            {review && (
+              <section aria-labelledby="knowledge-heading">
+                <h2
+                  id="knowledge-heading"
+                  className="text-xs font-semibold uppercase tracking-widest text-muted"
+                >
+                  Resulting Knowledge Entry
+                </h2>
+                {knowledgeEntry ? (
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border-subtle bg-surface p-5">
+                    <div>
+                      <Link
+                        href={`/knowledge/${knowledgeEntry.id}`}
+                        className="text-sm font-medium text-foreground underline-offset-2 hover:underline"
+                      >
+                        {knowledgeEntry.title}
+                      </Link>
+                      <p className="mt-1 text-xs text-muted">
+                        {knowledgeEntry.owner} · {knowledgeEntry.version}
+                      </p>
+                    </div>
+                    <KnowledgeStatusBadge status={knowledgeEntry.status} />
+                  </div>
+                ) : (
+                  <p className="mt-4 rounded-lg border border-dashed border-border-subtle p-5 text-sm text-foreground/70">
+                    This decision (
+                    <span className="font-medium text-foreground/80">
+                      {review.decision}
+                    </span>
+                    ) does not meet the publish-eligibility bar in this
+                    prototype, so no Knowledge Entry was created from this
+                    evaluation. See{" "}
+                    <Link
+                      href="/knowledge"
+                      className="font-medium text-foreground underline-offset-2 hover:underline"
+                    >
+                      Knowledge
+                    </Link>{" "}
+                    for how this case is represented there.
+                  </p>
+                )}
+              </section>
+            )}
           </div>
 
           {/* Side rail: failure evidence, kept visually separate from both

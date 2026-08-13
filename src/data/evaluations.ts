@@ -19,6 +19,13 @@
  * Decision Trail (Phase 7) is derived 1:1 from an evaluation's id, not a
  * separately authored record, so this keeps the two from drifting apart.
  *
+ * Phase 5 note: Case 4's simulated retrieval output now names and quotes
+ * the real KnowledgeEntry published from Case 1 (`knowledge-1` in
+ * `knowledge-entries.ts`), rather than a fictional, unlinked entry — see
+ * `retrievesKnowledgeEntryId` below — so the retrieval-quality contrast
+ * described in PROJECT_SPEC.md §7 is demonstrated with a real, traceable
+ * in-app link, not just descriptive prose.
+ *
  * Source material is described narratively, never reproduced as a
  * realistic-looking legal document, per PROJECT_SPEC.md §12.
  */
@@ -161,9 +168,9 @@ export const EVALUATIONS: Evaluation[] = [
     tool: "Enterprise AI Retrieval",
     caseType: "Knowledge Retrieval",
     inputSummary:
-      "A query submitted to the internal retrieval tool: 'What is our approved guidance for using AI extraction tools to pull financial figures from invoices, and what conditions apply?' The tool has read access to the (synthetic) internal knowledge base of already-reviewed guidance entries. That knowledge base independently contains a prior, unrelated entry — 'Claude (simulated) for Invoice Line-Item Extraction,' Status: Active, v2, Owner: Malcolm Reyes, Practice Knowledge Lead (synthetic), last reviewed 2025-11-03 — approved for extracting line-item totals and due dates from vendor invoices into structured fields, with a stated limitation that currency-conversion figures on multi-currency invoices require manual confirmation, and a required-review condition that a human confirm the extracted total against the invoice's printed total before it is entered into the billing system.",
+      "A query submitted to the internal retrieval tool: 'What is our approved guidance for using AI to produce a first-pass summary of a vendor services agreement, and what conditions apply?' The tool has read access to the (synthetic) internal knowledge base of already-reviewed guidance entries. That knowledge base independently contains the entry published from Case 1 of this same evaluation program — 'Vendor Services Agreement Summarization — Microsoft Copilot (simulated),' Status: Active, v1, Owner: Dana Whitfield, Practice Knowledge Lead (synthetic), last reviewed 2026-01-20 — approved for first-pass triage summarization of vendor services agreements ahead of full attorney review, with a stated limitation that the summary can state a cap or limit without surfacing carve-outs or exceptions to it, and a required-review condition that a reviewer re-open the source agreement's liability section to check for carve-outs before the summary informs a renewal or negotiation decision.",
     aiOutput:
-      "Retrieval result produced by Enterprise AI Retrieval (simulated):\n\n\"Found 1 matching guidance entry: 'Claude (simulated) for Invoice Line-Item Extraction' — Status: Active, v2, Owner: Malcolm Reyes, Practice Knowledge Lead (synthetic), last reviewed 2025-11-03. Approved use: extraction of line-item totals and due dates from vendor invoices into structured fields. Known limitation: currency-conversion figures on multi-currency invoices require manual confirmation. Required review: a human must confirm the extracted total against the invoice's printed total before entry into the billing system.\"",
+      "Retrieval result produced by Enterprise AI Retrieval (simulated):\n\n\"Found 1 matching guidance entry: 'Vendor Services Agreement Summarization — Microsoft Copilot (simulated)' — Status: Active, v1, Owner: Dana Whitfield, Practice Knowledge Lead (synthetic), last reviewed 2026-01-20. Approved use: first-pass triage summarization of vendor services agreements ahead of full attorney review. Known limitation: the summary can state a cap or limit without surfacing carve-outs or exceptions to it. Required review: a reviewer must re-open the source agreement's liability section to confirm whether carve-outs apply before the summary informs a renewal or negotiation decision.\"",
     scores: {
       accuracy: {
         score: 5,
@@ -197,6 +204,7 @@ export const EVALUATIONS: Evaluation[] = [
     status: "Reviewed",
     reviewId: "review-4",
     evidenceId: "eval-4",
+    retrievesKnowledgeEntryId: "knowledge-1",
   },
 ];
 

@@ -78,6 +78,13 @@ export interface Evaluation {
   status: EvaluationStatus;
   reviewId?: string;
   evidenceId: string;
+  /**
+   * Set only on the Case 4 (Enterprise AI Retrieval) evaluation, whose
+   * simulated output is itself a retrieval of an existing KnowledgeEntry
+   * from another case (PROJECT_SPEC.md §7, IMPLEMENTATION_PLAN.md Phase 5) —
+   * a real, in-app link rather than a described-but-unlinked reference.
+   */
+  retrievesKnowledgeEntryId?: string;
 }
 
 /**
