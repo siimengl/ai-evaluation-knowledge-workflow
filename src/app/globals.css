@@ -1,13 +1,56 @@
 @import "tailwindcss";
 
 :root {
+  /* Neutral palette (PROJECT_SPEC.md §13): near-black / near-white / gray,
+     one restrained accent used only for status/decision states. */
   --background: #ffffff;
   --foreground: #171717;
+  --surface: #fafafa;
+  --border-subtle: #e5e5e5;
+  --muted: #6b7280;
+
+  /* Status/decision colors — semantic and sparing (§13), defined here but
+     not yet used anywhere in Phase 1 (no decision data exists yet). */
+  --status-approved: #15803d;
+  --status-approved-bg: #f0fdf4;
+  --status-controls: #b45309;
+  --status-controls-bg: #fffbeb;
+  --status-not-recommended: #b91c1c;
+  --status-not-recommended-bg: #fef2f2;
+  --status-pending: #6b7280;
+  --status-pending-bg: #f4f4f5;
+
+  /* Actor-type tokens (Human / AI / System) — restrained tint + border only,
+     never saturated color blocks. Used to make WORKFLOW_STEPS actorType
+     subtly distinguishable without icons or a legend of bright badges. */
+  --actor-human-border: #a1a1aa;
+  --actor-human-bg: #fafafa;
+  --actor-ai-border: #93a5c9;
+  --actor-ai-bg: #f4f6fb;
+  --actor-system-border: #b7b09a;
+  --actor-system-bg: #faf9f5;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border-subtle: var(--border-subtle);
+  --color-muted: var(--muted);
+  --color-status-approved: var(--status-approved);
+  --color-status-approved-bg: var(--status-approved-bg);
+  --color-status-controls: var(--status-controls);
+  --color-status-controls-bg: var(--status-controls-bg);
+  --color-status-not-recommended: var(--status-not-recommended);
+  --color-status-not-recommended-bg: var(--status-not-recommended-bg);
+  --color-status-pending: var(--status-pending);
+  --color-status-pending-bg: var(--status-pending-bg);
+  --color-actor-human-border: var(--actor-human-border);
+  --color-actor-human-bg: var(--actor-human-bg);
+  --color-actor-ai-border: var(--actor-ai-border);
+  --color-actor-ai-bg: var(--actor-ai-bg);
+  --color-actor-system-border: var(--actor-system-border);
+  --color-actor-system-bg: var(--actor-system-bg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,11 +59,43 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --surface: #141414;
+    --border-subtle: #2a2a2a;
+    --muted: #9ca3af;
+
+    --actor-human-border: #52525b;
+    --actor-human-bg: #18181b;
+    --actor-ai-border: #3f4d6b;
+    --actor-ai-bg: #12151f;
+    --actor-system-border: #55503f;
+    --actor-system-bg: #161410;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/*
+ * Reusable container widths (Phase 1.1). Two fixed content widths so later
+ * "workspace" pages (Evaluation Workspace, Knowledge detail, etc.) can
+ * reuse the wider measure without a global layout rework, while reading
+ * pages (/, /workflow, /case-study) stay at a narrower, prose-friendly
+ * measure. Not Tailwind's built-in `container-*` scale, which doesn't land
+ * on these specific ranges.
+ */
+@utility content-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 48rem; /* ~768px, within the 760-820px reading range */
+  padding-inline: 1.5rem;
+}
+
+@utility workspace-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 78rem; /* ~1248px, within the 1200-1320px workspace range */
+  padding-inline: 1.5rem;
 }
