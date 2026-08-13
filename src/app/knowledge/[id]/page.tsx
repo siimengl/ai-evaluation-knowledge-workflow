@@ -137,32 +137,34 @@ export default async function KnowledgeEntryDetailPage({
                 Version History
               </h2>
               <p className="mt-2 text-sm text-foreground/70">
-                Currently a single entry — version increments only happen
-                through a reviewed feedback disposition or an equivalent
-                governance decision, never silently.
+                {entry.versionHistory.length > 1
+                  ? "Version increments only happen through a reviewed feedback disposition or an equivalent governance decision, never silently — each entry below states what changed and why, with earlier versions preserved rather than overwritten."
+                  : "Currently a single entry — version increments only happen through a reviewed feedback disposition or an equivalent governance decision, never silently."}
               </p>
               <ol className="mt-4 space-y-3">
-                {entry.versionHistory.map((versionEntry) => (
-                  <li
-                    key={versionEntry.version}
-                    className="rounded-lg border border-border-subtle bg-surface p-4"
-                  >
-                    <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <p className="text-sm font-semibold text-foreground">
-                        {versionEntry.version}
+                {[...entry.versionHistory]
+                  .reverse()
+                  .map((versionEntry) => (
+                    <li
+                      key={versionEntry.version}
+                      className="rounded-lg border border-border-subtle bg-surface p-4"
+                    >
+                      <div className="flex flex-wrap items-baseline justify-between gap-2">
+                        <p className="text-sm font-semibold text-foreground">
+                          {versionEntry.version}
+                        </p>
+                        <p className="text-xs text-muted">
+                          {versionEntry.date}
+                        </p>
+                      </div>
+                      <p className="mt-2 text-sm leading-6 text-foreground/80">
+                        {versionEntry.changeSummary}
                       </p>
-                      <p className="text-xs text-muted">
-                        {versionEntry.date}
+                      <p className="mt-1 text-xs text-muted">
+                        Changed by {versionEntry.changedBy}
                       </p>
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-foreground/80">
-                      {versionEntry.changeSummary}
-                    </p>
-                    <p className="mt-1 text-xs text-muted">
-                      Changed by {versionEntry.changedBy}
-                    </p>
-                  </li>
-                ))}
+                    </li>
+                  ))}
               </ol>
             </section>
           </div>

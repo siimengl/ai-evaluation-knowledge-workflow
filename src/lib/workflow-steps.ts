@@ -73,7 +73,7 @@ export const WORKFLOW_STEPS: WorkflowStep[] = [
     summary: "A simulated usage note is submitted against a published entry.",
     actorType: "Human",
     detail:
-      "Once an entry is published, a synthetic submitter can log a written note about how the guidance held up in a simulated scenario — modeling the kind of feedback loop a deployed system would need, not a report from an actual deployment. This step is not exposed in the app until later in the build — see /case-study for what's live today.",
+      "Once an entry is published, a synthetic submitter can log a written note about how the guidance held up in a simulated scenario — modeling the kind of feedback loop a deployed system would need, not a report from an actual deployment.",
   },
   {
     number: 8,

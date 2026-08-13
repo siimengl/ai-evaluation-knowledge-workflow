@@ -11,9 +11,17 @@
  *
  * Each entry is derived directly from its source evaluation's content and
  * its HumanReview's rationale/conditions — nothing here introduces guidance
- * unrelated to what was actually tested and reviewed. Version history is a
- * single v1 entry at this phase; feedback-driven increments arrive in
- * Phase 6.
+ * unrelated to what was actually tested and reviewed. Version history was a
+ * single v1 entry through Phase 5.
+ *
+ * Phase 6 note: `knowledge-1` now carries a real v1.1, produced by an
+ * `Accepted → New Version` disposition on `feedback-1` (see
+ * `feedback-items.ts`). The update is a genuine scope expansion, not a
+ * wording pass — it generalizes the original single-clause finding
+ * (liability-cap carve-outs) into the broader pattern the feedback
+ * surfaced: any standalone figure, date, or limit in the summary may have a
+ * governing condition defined in a different section of the source
+ * document. v1 is preserved unmodified in `versionHistory` below.
  */
 
 import type { Evaluation, KnowledgeEntry } from "./types";
@@ -29,13 +37,13 @@ export const KNOWLEDGE_ENTRIES: KnowledgeEntry[] = [
     approvedUse:
       "First-pass triage summarization of vendor services agreements ahead of full attorney review — producing a quick-reference summary of term, termination, liability, and renewal provisions to help prioritize which sections need close reading. Not a substitute for full attorney review of liability, indemnification, or other risk-allocation clauses.",
     knownLimitations:
-      "As tested, the summary can state a liability cap or other limitation without surfacing carve-outs or exceptions to it (in this case, the exclusion of data-security-breach and willful-misconduct claims from an otherwise-capped liability provision). A stated cap or limit should never be treated as the complete picture without checking the source clause.",
+      "As tested, the summary can present a standalone figure, date, or limit as complete when a condition governing it is actually defined in a different section of the source document — not necessarily adjacent to the term itself. The original finding was a liability cap stated without its carve-outs for data-security-breach and willful-misconduct claims; a later usage report confirmed the same pattern recurring on a renewal notice deadline defined in a separate 'Term' section from the renewal clause it governs. Any capped, limited, or dated figure in the summary should be treated as potentially incomplete until the reviewer checks the rest of the document, not just the clause it appears under.",
     requiredReview:
-      "A reviewer must re-open the source agreement's liability section (and any other capped or limited clause) to confirm whether carve-outs or exceptions apply before the summary is used to inform a renewal or negotiation decision.",
+      "A reviewer must re-open the source agreement and check the full document — not only the clause the summary places a figure or date under — for any condition that governs it (e.g., liability carve-outs, or a renewal notice period defined in a separate Term section). This applies to every standalone cap, limit, or date in the summary, not only the liability clause originally identified.",
     promptGuidance:
-      "When requesting a vendor agreement summary, explicitly instruct the tool to flag any exceptions, carve-outs, or conditions attached to caps, limits, or renewal terms — not just the headline figure — and to note when a clause could not be fully summarized in one line.",
+      "When requesting a vendor agreement summary, explicitly instruct the tool to (1) flag any exceptions, carve-outs, or conditions attached to caps, limits, dates, or renewal terms, and (2) state explicitly if it cannot confirm whether a governing condition exists elsewhere in the document. Conditions are often defined in a separate section from the term they govern (e.g., a renewal notice deadline in a 'Term' section vs. the renewal clause itself) — the absence of a flagged exception in one clause's text is not confirmation that no exception exists.",
     owner: "Dana Whitfield, Practice Knowledge Lead (synthetic)",
-    version: "v1",
+    version: "v1.1",
     versionHistory: [
       {
         version: "v1",
@@ -44,8 +52,15 @@ export const KNOWLEDGE_ENTRIES: KnowledgeEntry[] = [
           "Initial publication from Case 1's evaluation review (decision: Approved with Controls).",
         changedBy: "Dana Whitfield, Practice Knowledge Lead (synthetic)",
       },
+      {
+        version: "v1.1",
+        date: "2026-03-04",
+        changeSummary:
+          "Accepted feedback from Marcus Iyer (Associate, synthetic) — feedback-1 — reported the same blind spot recurring on a renewal notice deadline, not just the original liability cap. Generalized Known Limitations, Required Review, and Prompt Guidance from a single-clause caution into the broader, more reusable pattern: a stated figure, date, or limit can have a governing condition defined in a different section of the document than the term itself. This is a scope expansion of the guidance, not a wording edit.",
+        changedBy: "Dana Whitfield, Practice Knowledge Lead (synthetic)",
+      },
     ],
-    date: "2026-01-20",
+    date: "2026-03-04",
   },
   {
     id: "knowledge-4",

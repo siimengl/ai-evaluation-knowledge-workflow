@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 /**
  * Global primary navigation (PROJECT_SPEC.md §3).
  *
- * Only the 5 routes that exist as of Phase 1 are listed. `/feedback` is
- * intentionally omitted until Phase 6 (§10); `/evidence/[id]` is never a
+ * `/feedback` is added here for the first time in Phase 6 (§10) — it did
+ * not exist in nav or routing in Phases 1–5. `/evidence/[id]` is never a
  * standalone nav item (§3) since it has no independent index.
  */
 const NAV_LINKS = [
@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/workflow", label: "Workflow" },
   { href: "/evaluations", label: "Evaluations" },
   { href: "/knowledge", label: "Knowledge" },
+  { href: "/feedback", label: "Feedback" },
   { href: "/case-study", label: "Case Study" },
 ] as const;
 
