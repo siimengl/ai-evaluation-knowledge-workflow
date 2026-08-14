@@ -6,8 +6,8 @@
  *   - Case 1 (Copilot / Summarization): omitted qualification — completeness axis.
  *   - Case 2 (Claude / Extraction): a conditional term flattened into an
  *     unconditional field — workflow-fit axis.
- *   - Case 3 (ChatGPT / Draft Assistance): confident language exceeding
- *     source support — source-grounding axis.
+ *   - Case 3 (ChatGPT / Draft Assistance): scope misattribution — a genuine
+ *     figure applied to the wrong subject — source-grounding axis.
  *   - Case 4 (Enterprise AI Retrieval / Knowledge Retrieval): the contrast
  *     case — a well-grounded retrieval with a mild/absent failure mode.
  *
@@ -154,7 +154,7 @@ export const EVALUATIONS: Evaluation[] = [
       description:
         "The source states a genuine 90-day retention period for security event logs, and separately states that the client-content retention schedule was not provided. The draft misattributes the security-log figure to client-data retention. The AI's confident, fluent phrasing gives a real figure — applied to the wrong subject — the same apparent authority as a verified fact.",
       severity: "High",
-      category: "Confident Language Exceeding Source Support",
+      category: "Scope Misattribution",
     },
     reviewBoundary:
       "A human must verify every specific figure or timeframe in a draft against the source document line-by-line — including confirming which data category a figure actually describes — before it is used externally; fluent, professional-sounding phrasing is not evidence that a claim is grounded, and a real number can still be misapplied.",

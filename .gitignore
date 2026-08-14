@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# internal planning docs (kept locally for development, not published)
+/AGENTS.md
+/CLAUDE.md
+/IMPLEMENTATION_PLAN.md
+/PROJECT_SPEC.md

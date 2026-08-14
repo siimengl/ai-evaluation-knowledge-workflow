@@ -163,10 +163,9 @@ export default function CaseStudyPage() {
               <span className="font-medium text-foreground">
                 Case 3 — Draft Assistance (ChatGPT, simulated):
               </span>{" "}
-              confident language exceeding source support. A genuine figure
-              from the source is applied to the wrong subject, with fluent
-              phrasing giving it the same apparent authority as a verified
-              fact.
+              scope misattribution. A genuine figure from the source is
+              applied to the wrong subject, with fluent phrasing giving it
+              the same apparent authority as a verified fact.
             </li>
             <li>
               <span className="font-medium text-foreground">
